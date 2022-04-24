@@ -14,6 +14,7 @@ backup_and_deploy $HOME/.config/alacritty alacritty alacritty.yml
 
 # nvim
 backup_and_deploy $HOME/.config/nvim/ nvim init.vim
+nvim +'PlugInstall' +qall
 
 # tmux
 backup_and_deploy $HOME/ tmux .tmux.conf
