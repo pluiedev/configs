@@ -3,17 +3,17 @@
 # synchronizing configs from local directories
 
 # alacritty
-mkdir alacritty
+mkdir -p alacritty
 cp $HOME/.config/alacritty/alacritty.yml ./alacritty/
 
 # nvim
-mkdir nvim
+mkdir -p nvim
 cp $HOME/.config/nvim/init.vim ./nvim/
 
 # tmux
-mkdir tmux
+mkdir -p tmux
 cp $HOME/.tmux.conf ./tmux/
 
 # zsh
-mkdir zsh
+mkdir -p zsh
 cp $HOME/.zshrc ./zsh/
