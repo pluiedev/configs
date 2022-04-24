@@ -1,0 +1,1 @@
+/home/leocth/.config/nvim/init.vim
