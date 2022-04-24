@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # synchronizing configs from local directories
 
@@ -13,3 +13,7 @@ cp $HOME/.config/nvim/init.vim ./nvim/
 # tmux
 mkdir tmux
 cp $HOME/.tmux.conf ./tmux/
+
+# zsh
+mkdir zsh
+cp $HOME/.zshrc ./zsh/
