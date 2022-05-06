@@ -49,6 +49,9 @@ eval "$(rbenv init - zsh)"
 
 # set default editor to nvim
 export EDITOR="nvim"
+# set pager to nvimpager
+export PAGER="nvimpager"
+export MANPAGER="nvimpager"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
