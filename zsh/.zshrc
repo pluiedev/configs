@@ -80,7 +80,20 @@ HISTORY_IGNORE='(fg)'
 
 # `thefuck`
 PATH=$PATH:/home/leocth/.local/bin/
-
 eval $(thefuck --alias f)
 
+# TeX Live
+PATH=$PATH:/usr/local/texlive/2022/bin/x86_64-linux
+
+# fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# perl 5 & CPAN
+PATH="/home/leocth/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/home/leocth/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/leocth/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/leocth/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/leocth/perl5"; export PERL_MM_OPT;
+
+# rsmpeg
+export FFMPEG_PKG_CONFIG_PATH=$HOME/ffmpeg_build/lib/pkgconfig
