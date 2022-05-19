@@ -79,11 +79,11 @@ zpm load zpm-zsh/zsh-history-substring-search
 HISTORY_IGNORE='(fg)'
 
 # `thefuck`
-PATH=$PATH:/home/leocth/.local/bin/
+export PATH=$PATH:/home/leocth/.local/bin/
 eval $(thefuck --alias f)
 
 # TeX Live
-PATH=$PATH:/usr/local/texlive/2022/bin/x86_64-linux
+export PATH=$PATH:/usr/local/texlive/2022/bin/x86_64-linux
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
