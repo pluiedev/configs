@@ -85,6 +85,9 @@ eval $(thefuck --alias f)
 # TeX Live
 export PATH=$PATH:/usr/local/texlive/2022/bin/x86_64-linux
 
+# nim
+export PATH=/home/leocth/.nimble/bin:$PATH
+
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
