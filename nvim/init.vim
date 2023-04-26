@@ -356,6 +356,31 @@ set shortmess+=c " don't give |ins-completion-menu| messages.
 " Verbose: set listchars=nbsp:¬,eol:¶,extends:»,precedes:«,trail:•
 set listchars=nbsp:¬,extends:»,precedes:«,trail:•
 
+" Neovide-specific
+if exists("g:neovide")
+    " that framerate, babeeeeeeeeeeeee
+    let g:neovide_refresh_rate=144
+   
+    let g:default_font_size = 13
+    func! UpdateFont()
+        let &guifont = "Iosevka\ Light\ Extended:h".g:font_size
+    endfunc
+    func! ChangeFontSize(delta)
+       let g:font_size = g:font_size + a:delta
+       call UpdateFont()
+    endfunc
+    func! ResetFontSize()
+       let g:font_size = g:default_font_size
+       call UpdateFont()
+    endfunc
+    call ResetFontSize()
+   
+    
+    nnoremap <C-=> :call ChangeFontSize(1)<CR>
+    nnoremap <C--> :call ChangeFontSize(-1)<CR>
+    nnoremap <C-0> :call ResetFontSize()<CR>
+endif
+
 " =============================================================================
 " # Keyboard shortcuts
 " =============================================================================
@@ -402,7 +427,7 @@ map L $
 " Neat X clipboard integration
 " ,p will paste clipboard into buffer
 " ,c will copy entire buffer into clipboard
-noremap <leader>p :read !xsel --clipboard --output<cr>
+noremap <leader>p :read !xsel --clipboard --:utput<cr>
 noremap <leader>c :w !xsel -ib<cr><cr>
 
 " <leader>s for Rg search

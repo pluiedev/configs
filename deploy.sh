@@ -5,12 +5,13 @@
 
 # backup_and_deploy <local_dir> <repo_dir> <file_name>
 function backup_and_deploy {
+    mkdir -p $1
     mv $1/$3 $1/$3.old
     cp $2/$3 $1
 }
 
 # alacritty
-backup_and_deploy $HOME/.config/alacritty alacritty alacritty.yml
+backup_and_deploy $HOME/.config/alacritty/ alacritty alacritty.yml
 
 # nvim
 backup_and_deploy $HOME/.config/nvim/ nvim init.vim

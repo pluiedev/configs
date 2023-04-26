@@ -7,96 +7,110 @@ unsetopt beep
 bindkey -v
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
-zstyle :compinstall filename '/home/leocth/.zshrc'
+zstyle :compinstall filename '$HOME/.zshrc'
 
-autoload -Uz compinit
-compinit
-# End of lines added by compinstall
+# zi
+typeset -A ZI
+ZI[BIN_DIR]="${HOME}/.zi"
+source "${ZI[BIN_DIR]}/zi.zsh"
+# zi completions
+autoload -Uz _zi
+(( ${+_comps} )) && _comps[zi]=_zi
 
-# zpm
-[[ -f ~/.zpm/zpm.zsh ]] ||
-git clone --recursive https://github.com/zpm-zsh/zpm ~/.zpm
-source ~/.zpm/zpm.zsh
+setopt prompt_subst
 
-zpm load @omz
+zi wait lucid for \
+    OMZL::git.zsh \
+    OMZL::compfix.zsh \
+    OMZL::completion.zsh \
+    OMZL::directories.zsh \
+    OMZL::functions.zsh \
+    OMZL::git.zsh \
+    OMZL::grep.zsh \
+    OMZL::history.zsh \
+    OMZL::key-bindings.zsh \
+    OMZL::misc.zsh \
+    OMZL::spectrum.zsh \
+    OMZL::theme-and-appearance.zsh \
+    atload"unalias grv" OMZP::git \
 
-zpm load \
-	@omz-lib/compfix \
-	@omz-lib/completion \
-	@omz-lib/directories \
-	@omz-lib/functions \
-	@omz-lib/git \
-	@omz-lib/grep \
-	@omz-lib/history \
-	@omz-lib/key-bindings \
-	@omz-lib/misc \
-	@omz-lib/spectrum \
-	@omz-lib/theme-and-appearance
+# Temporary prompt
+PS1="❯"
 
-zpm load \
-	@omz/git,async \
-	@omz/colored-man-pages,async \
-	@omz/python,async \
-	@omz/command-not-found,async \
-	@omz/colorize,async \
-	@omz/common-aliases,async \
-	@omz/dnf,async \
-zpm load @omz-theme/nicoulaj
+zi wait'!' lucid for \
+    OMZL::prompt_info_functions.zsh \
+    OMZT::nicoulaj
 
-# rbenv
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init - zsh)"
+zi wait lucid for \
+    atinit"ZI[COMPINIT_OPTS]=-C; zicompinit; zicdreplay"\
+        z-shell/F-Sy-H \
+    zpm-zsh/zsh-history-substring-search \
+    atload"!_zsh_autosuggest_start" \
+        zsh-users/zsh-autosuggestions \
+    OMZP::colored-man-pages \
+    has'python' has'python3' OMZP::python \
+    OMZP::colorize \
+    has'dnf' OMZP::dnf \
+    has'deno' OMZP::deno \
+    has'nvm' OMZP::nvm \
+    has'rbenv' OMZP::rbenv \
+    has'thefuck' OMZP::thefuck \
+    OMZP::command-not-found \
+    has'exa' zplugin/zsh-exa \
+    has'zoxide' z-shell/zsh-zoxide \
 
-# set default editor to nvim
-export EDITOR="nvim"
+zi wait lucid as'completion' blockf for \
+    has'rg' https://github.com/BurntSushi/ripgrep/blob/master/complete/_rg \
+    has'rustc' OMZP::rust/_rustc \
+    has'cargo' https://github.com/rust-lang/cargo/blob/master/src/etc/_cargo \
+    zsh-users/zsh-completions
+
+# Somehow nvm needs to be manually lazy loaded...
+# ~300ms -> ~40ms, massive shave off in time
+zstyle ':omz:plugins:nvm' lazy yes
+# Use .nvmrc, _silently_
+zstyle ':omz:plugins:nvm' silent-autoload yes
+
+# set default editor to helix
+export EDITOR=hx
 # set pager to nvimpager
-export PAGER="nvimpager"
-export MANPAGER="nvimpager"
+export PAGER=nvimpager
+export MANPAGER=nvimpager
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# some oh my zsh plugins need this...
+export ZSH_CACHE_DIR=~/.zcache
 
 # Fuck you resolved
 alias rsdns="sudo systemctl restart systemd-resolved"
 
-# Custom convenience aliases
-alias exl="exa --long --color=always"
-alias ext="exa --tree --color=always"
-alias exg="exa --grid --level=3 --color=always"
-alias extl="exa --grid --level=3 --long --color=always"
-alias exgl="exa --grid --long --color=always"
-
-# Syntax highlighting
-zpm load \
-	zsh-users/zsh-completions,async \
-	zsh-users/zsh-autosuggestions,async \
-
-zpm load zpm-zsh/fast-syntax-highlighting
-zpm load zpm-zsh/zsh-history-substring-search
-
 # `fg` shouldn't pollute history
 HISTORY_IGNORE='(fg)'
-
-# `thefuck`
-export PATH=$PATH:/home/leocth/.local/bin/
-eval $(thefuck --alias f)
 
 # TeX Live
 export PATH=$PATH:/usr/local/texlive/2022/bin/x86_64-linux
 
 # nim
-export PATH=/home/leocth/.nimble/bin:$PATH
-
-# fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export PATH=$HOME/.nimble/bin:$PATH
 
 # perl 5 & CPAN
-PATH="/home/leocth/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="/home/leocth/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/home/leocth/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/home/leocth/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/home/leocth/perl5"; export PERL_MM_OPT;
+export PATH="$HOME/perl5/bin${PATH:+:${PATH}}"
+export PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"
+export PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
+export PERL_MB_OPT="--install_base \"$HOME/perl5\""
+export PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"
 
 # rsmpeg
 export FFMPEG_PKG_CONFIG_PATH=$HOME/ffmpeg_build/lib/pkgconfig
+
+# pnpm
+export PNPM_HOME="$HOME/.local/share/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+
+# nvim stuff
+alias vim=nvim
+alias neovide="neovide --multigrid"
+
+# deno
+export DENO_INSTALL="$HOME/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+
