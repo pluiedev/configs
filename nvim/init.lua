@@ -50,7 +50,7 @@ return packer.startup(function(use)
         config = function()
             local tree = require "nvim-tree"
             tree.setup {}
-    	    vim.keymap.set('', '<C-p>', tree.toggle())
+    	    vim.keymap.set('', '<C-p>', ':NvimTreeToggle<cr>')
         end
     }
     use {
