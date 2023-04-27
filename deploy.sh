@@ -14,8 +14,13 @@ function backup_and_deploy {
 backup_and_deploy $HOME/.config/alacritty/ alacritty alacritty.yml
 
 # nvim
-backup_and_deploy $HOME/.config/nvim/ nvim init.vim
-nvim +'PlugInstall' +qall
+backup_and_deploy $HOME/.config/nvim/ nvim init.lua
+rm -r $HOME/.config/nvim/scripts
+cp -r nvim/scripts $HOME/.config/nvim/scripts
+rm -r $HOME/.config/nvim/lua
+cp -r nvim/lua $HOME/.config/nvim/lua
+
+nvim +'PackerInstall' +qall
 
 # tmux
 backup_and_deploy $HOME/ tmux .tmux.conf

@@ -35,15 +35,14 @@ zi wait lucid for \
     atload"unalias grv" OMZP::git \
 
 # Temporary prompt
-PS1="❯"
+PS1="❯ "
 
 zi wait'!' lucid for \
     OMZL::prompt_info_functions.zsh \
     OMZT::nicoulaj
 
 zi wait lucid for \
-    atinit"ZI[COMPINIT_OPTS]=-C; zicompinit; zicdreplay"\
-        z-shell/F-Sy-H \
+    atload"base16_tomorrow-night" chriskempson/base16-shell \
     zpm-zsh/zsh-history-substring-search \
     atload"!_zsh_autosuggest_start" \
         zsh-users/zsh-autosuggestions \
@@ -56,14 +55,17 @@ zi wait lucid for \
     has'rbenv' OMZP::rbenv \
     has'thefuck' OMZP::thefuck \
     OMZP::command-not-found \
-    has'exa' zplugin/zsh-exa \
+    has'exa' z-shell/zsh-exa \
     has'zoxide' z-shell/zsh-zoxide \
 
 zi wait lucid as'completion' blockf for \
     has'rg' https://github.com/BurntSushi/ripgrep/blob/master/complete/_rg \
     has'rustc' OMZP::rust/_rustc \
     has'cargo' https://github.com/rust-lang/cargo/blob/master/src/etc/_cargo \
-    zsh-users/zsh-completions
+
+zi wait lucid atload"zicompinit; zicdreplay" blockf for \
+    z-shell/F-Sy-H \
+    zsh-users/zsh-completions \
 
 # Somehow nvm needs to be manually lazy loaded...
 # ~300ms -> ~40ms, massive shave off in time
@@ -79,6 +81,7 @@ export MANPAGER=nvimpager
 
 # some oh my zsh plugins need this...
 export ZSH_CACHE_DIR=~/.zcache
+mkdir -p $ZSH_CACHE_DIR
 
 # Fuck you resolved
 alias rsdns="sudo systemctl restart systemd-resolved"
@@ -114,3 +117,5 @@ alias neovide="neovide --multigrid"
 export DENO_INSTALL="$HOME/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

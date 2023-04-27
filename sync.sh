@@ -8,7 +8,7 @@ cp $HOME/.config/alacritty/alacritty.yml ./alacritty/
 
 # nvim
 mkdir -p nvim
-cp $HOME/.config/nvim/init.vim ./nvim/
+cp -r $HOME/.config/nvim/{scripts,init.lua,lua} ./nvim/
 
 # tmux
 mkdir -p tmux
