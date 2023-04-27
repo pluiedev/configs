@@ -73,8 +73,8 @@ zstyle ':omz:plugins:nvm' lazy yes
 # Use .nvmrc, _silently_
 zstyle ':omz:plugins:nvm' silent-autoload yes
 
-# set default editor to helix
-export EDITOR=hx
+# set default editor to nvim
+export EDITOR=nvim
 # set pager to nvimpager
 export PAGER=nvimpager
 export MANPAGER=nvimpager
