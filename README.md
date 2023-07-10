@@ -1,3 +1,7 @@
+**ARCHIVED:** Go to [pluiedev/flake](https://github.com/pluiedev/flake) to enjoy more quality™ configurations™
+
+---
+
 # configs
 
 It's yet another configs/dotfiles repo. Yay.
